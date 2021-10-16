@@ -6,7 +6,7 @@ import { getDeviceId,getUniqueId } from 'react-native-device-info';
  
 const App = ()=> {
   id = getUniqueId();
-  const [showWebView,setShowWebView] = useState(false)
+  const [showWebView,setShowWebView] = useState(false);
   const runFirst = `
     setData('${this.id}');
     true; // note: this is required, or you'll sometimes get silent failures
@@ -15,7 +15,6 @@ const App = ()=> {
     <View style={styles.container}>
       {showWebView ? <WebView
         source={require('./index.html')}
-        onMessage={(event) => {}}
         injectedJavaScript={runFirst}
       /> : null}
       <Button onPress={()=>{setShowWebView(true)}} title='Open Widget'></Button>
