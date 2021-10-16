@@ -15,6 +15,7 @@ const App = ()=> {
     <View style={styles.container}>
       {showWebView ? <WebView
         source={require('./index.html')}
+        ref={ref=> this.webView = ref}
         onMessage={(event)=>{}}
         injectedJavaScript={runFirst}
       /> : null}

@@ -6,27 +6,14 @@
     }
   </style>
   <body>
-    <div class="widgetContainer">
-      <div id="container">Hello World</div>
-      <button onclick="loadWidgetToReportAnIssue()">Show Widget</button>
-    </div>
   </body>
 
   <script language="javascript">
-    let data = "test";
-    function setData(value) {
-      data = value;
-    }
-
-    var obj = {
+      var obj = {
       deviceId: "",
     };
-
-    function loadWidgetToReportAnIssue() {
-      obj.deviceId = data;
-      Freshbots.initiateChat();
-      Freshbots.showWidget(true);
-      setTimeout(()=>{alert(obj.deviceId)},5000)
+    function setData(value) {
+      obj.deviceId = value;
     }
     (function (d, w, c) {
       if (!d.getElementById("spd-busns-spt")) {
@@ -36,7 +23,7 @@
         s.id = "spd-busns-spt";
         s.async = "async";
         s.setAttribute("data-self-init", "false");
-        s.setAttribute("data-init-type", "delayed");
+        s.setAttribute("data-init-type", "opt");
         s.src = "https://cdn.in-freshbots.ai/assets/share/js/freshbots.min.js";
         s.setAttribute(
           "data-client",
@@ -68,7 +55,10 @@
             };
           },
         },
-        function (successResponse) {},
+        function (successResponse) {
+            setTimeout(()=>{alert(obj.deviceId)},2000);
+            Freshbots.showWidget(true);
+        },
         function (errorResponse) {}
       );
     });
