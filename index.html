@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    .widgetContainer {
+      margin-top: 50vh;
+    }
+  </style>
+  <body>
+    <div class="widgetContainer">
+      <div id="container">Hello World</div>
+      <button onclick="loadWidgetToReportAnIssue()">Show Widget</button>
+    </div>
+  </body>
+
+  <script language="javascript">
+    document.addEventListener("message", function(event) {
+    alert(event.data)
+    })
+    let data = "test";
+    function setData(value) {
+      data = value;
+    }
+
+    var obj = {
+      deviceId: "",
+    };
+
+    function loadWidgetToReportAnIssue(data) {
+      obj.deviceId = data;
+      Freshbots.initiateChat();
+      Freshbots.showWidget(true);
+      setTimeout(()=>{alert(obj.deviceId)},5000)
+    }
+    (function (d, w, c) {
+      if (!d.getElementById("spd-busns-spt")) {
+        var n = d.getElementsByTagName("script")[0],
+          s = d.createElement("script");
+        var loaded = false;
+        s.id = "spd-busns-spt";
+        s.async = "async";
+        s.setAttribute("data-self-init", "false");
+        s.setAttribute("data-init-type", "delayed");
+        s.src = "https://cdn.in-freshbots.ai/assets/share/js/freshbots.min.js";
+        s.setAttribute(
+          "data-client",
+          "5bcaeb559a88f6c406a65031a7b1e1abf2316df0"
+        );
+        s.setAttribute(
+          "data-bot-hash",
+          "ce6ef7fa7e5644503050d7b4b0a97eb68033edef"
+        );
+        s.setAttribute("data-env", "prod");
+        s.setAttribute("data-region", "in");
+        if (c) {
+          s.onreadystatechange = s.onload = function () {
+            if (!loaded) {
+              c();
+            }
+            loaded = true;
+          };
+        }
+        n.parentNode.insertBefore(s, n);
+      }
+    })(document, window, function () {
+      Freshbots.initiateWidget(
+        {
+          autoInitChat: false,
+          getClientParams: function () {
+            return {
+              deviceId: obj.deviceId,
+            };
+          },
+        },
+        function (successResponse) {},
+        function (errorResponse) {}
+      );
+    });
+  </script>
+</html>

@@ -1,21 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { View,Button,StyleSheet} from 'react-native';
+import { WebView } from 'react-native-webview';
+import { getDeviceId,getUniqueId } from 'react-native-device-info';
 
-export default function App() {
+ 
+const App = ()=> {
+  id = getUniqueId();
+  const [showWebView,setShowWebView] = useState(false)
+  const runFirst = `
+    setData('${this.id}');
+    true; // note: this is required, or you'll sometimes get silent failures
+  `;
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      {showWebView ? <WebView
+        source={require('./index.html')}
+        onMessage={(event) => {}}
+        injectedJavaScript={runFirst}
+      /> : null}
+      <Button onPress={()=>{setShowWebView(true)}} title='Open Widget'></Button>
+      <Button onPress={()=>{setShowWebView(false)}} title='Close'></Button>
     </View>
   );
-}
+  }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+    },
+  });
+export default App;
