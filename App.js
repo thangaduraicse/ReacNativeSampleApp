@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View,Button,StyleSheet} from 'react-native';
 import { WebView } from 'react-native-webview';
-import { getDeviceId,getUniqueId } from 'react-native-device-info';
+import { getUniqueId } from 'react-native-device-info';
 
  
 const App = ()=> {
@@ -15,6 +15,7 @@ const App = ()=> {
     <View style={styles.container}>
       {showWebView ? <WebView
         source={require('./index.html')}
+        onMessage={(event)=>{}}
         injectedJavaScript={runFirst}
       /> : null}
       <Button onPress={()=>{setShowWebView(true)}} title='Open Widget'></Button>

@@ -13,9 +13,6 @@
   </body>
 
   <script language="javascript">
-    document.addEventListener("message", function(event) {
-    alert(event.data)
-    })
     let data = "test";
     function setData(value) {
       data = value;
@@ -25,7 +22,7 @@
       deviceId: "",
     };
 
-    function loadWidgetToReportAnIssue(data) {
+    function loadWidgetToReportAnIssue() {
       obj.deviceId = data;
       Freshbots.initiateChat();
       Freshbots.showWidget(true);
