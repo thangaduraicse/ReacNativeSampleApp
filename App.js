@@ -43,9 +43,13 @@ const App = () => {
 
     // Refe showFreshbotsWidget in freshbots-delayed.html
     webViewRef.current?.injectJavaScript(`
-      window.Freshbots &&
-        window.showFreshbotsWidget && 
-        window.showFreshbotsWidget(${sampleUserID}, ${sampleOrderID}, ${uniqueId});
+      (function() {
+        window.Freshbots &&
+          window.showFreshbotsWidget && 
+          window.showFreshbotsWidget('${sampleUserID}', '${sampleOrderID}', '${uniqueId}');
+        
+        return true;
+      })();
     `);
   };
 

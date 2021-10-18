@@ -42,8 +42,8 @@
         history.back();
       }
 
-      function showFreshbotsWidget(orderId, orderName, deviceId) {
-        console.log("Opening order #" + orderId + " " + orderName + "...");
+      function showFreshbotsWidget(userId, orderId, deviceId) {
+        console.log("Opening user #" + userId + " order #" + orderId + " ...");
 
         // Update order details in the orderData object reference
         orderData.xtrnlTcktId = userId + orderId;
@@ -74,18 +74,15 @@
         s.setAttribute("data-self-init", "false");
         s.setAttribute("data-init-type", "delayed");
 
-        s.src = "https://cdn.freshbots.ai/assets/share/js/freshbots.js";
+        s.src = "https://cdn.in-freshbots.ai/assets/share/js/freshbots.min.js";
 
-        s.setAttribute("data-client", "JOE");
+        s.setAttribute("data-client", "5bcaeb559a88f6c406a65031a7b1e1abf2316df0");
         s.setAttribute(
           "data-bot-hash",
-          "27d18eea2d5709011fe5bc04cdbe1007917ed644"
+          "ce6ef7fa7e5644503050d7b4b0a97eb68033edef"
         );
-        s.setAttribute("data-bot-version", "10");
-        s.setAttribute("data-flow-hash", "");
-        s.setAttribute("data-region", "us");
-        s.setAttribute("data-env", "stag");
-        // s.setAttribute("data-spa-app", "true");
+        s.setAttribute("data-region", "in");
+        s.setAttribute("data-env", "prod");
 
         if (c) {
           s.onreadystatechange = s.onload = function () {
