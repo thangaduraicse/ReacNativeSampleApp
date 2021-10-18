@@ -53,6 +53,13 @@
         Freshbots.initiateChat();
         Freshbots.showWidget(true);
       }
+
+      function notifyWidgetLoadedStatus(status) {
+        var postMessageData = JSON.stringify({ widgetLoaded: status });
+
+        window.ReactNativeWebView &&
+          window.ReactNativeWebView.postMessage(postMessageData);
+      }
     </script>
 
     <!-- Freshbots script -->
@@ -96,24 +103,14 @@
             autoInitChat: false,
             getClientParams: function () {
               return orderData;
-            },
-            getDialer: function () {
-              console.log("====> Get Dialer log from index.html", arguments[0]);
-
-              return true;
-            },
-            navigateToDeeplink: function () {
-              console.log(
-                "====> Navigate to deeplink log from index.html",
-                arguments[0]
-              );
-              const params = arguments[0];
-
-              window.open(params.deeplink, "_blank").focus(); // for example opening it in new tab
             }
           },
-          function (successResponse) {},
-          function (errorResponse) {}
+          function (successResponse) {
+            notifyWidgetLoadedStatus(true);
+          },
+          function (errorResponse) {
+            notifyWidgetLoadedStatus(false);
+          }
         );
       });
     </script>

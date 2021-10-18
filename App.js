@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   Platform,
   ScrollView,
@@ -22,11 +22,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#FF9800",
     justifyContent: "center",
     alignItems: "center",
-    position: "fixed",
+    position: "absolute",
     top: 60,
     right: 10,
     borderRadius: 37.5,
     zIndex: 1,
+    elevation: (Platform.OS === 'android') ? 50 : 0,
   },
 });
 
@@ -34,6 +35,8 @@ const App = () => {
   const webViewRef = useRef(null);
   const sampleUserID = "test@amanco.com";
   const sampleOrderID = "12345";
+
+  const [showChatIcon, setShowChatIcon] = useState(false);
 
   const handleChatButtonClick = () => {
     const uniqueId = getUniqueId();
@@ -46,6 +49,13 @@ const App = () => {
     `);
   };
 
+  const handleWebViewMessageEvent = (event) => {
+    const { data } = event.nativeEvent;
+    const parsedData = JSON.parse(data);
+
+    setShowChatIcon(parsedData.widgetLoaded);
+  }
+
   /*
    * for android we recommend hosting it and using the static HTML
    * https://github.com/react-native-webview/react-native-webview/issues/746
@@ -55,16 +65,11 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableHighlight
-        onPress={handleChatButtonClick}
-        style={styles.chatIcon}
-      >
-        <Text>Chat</Text>
-      </TouchableHighlight>
       <ScrollView>
         <LoremIpsum />
       </ScrollView>
       <WebView
+        onMessage={handleWebViewMessageEvent}
         ref={webViewRef}
         source={
           Platform.OS === "android"
@@ -75,6 +80,16 @@ const App = () => {
             : require("./freshbots-delayed.html")
         }
       />
+      {
+        showChatIcon && (
+          <TouchableHighlight
+            onPress={handleChatButtonClick}
+            style={styles.chatIcon}
+          >
+            <Text>Chat</Text>
+          </TouchableHighlight>
+        )
+      }
     </View>
   );
 };
