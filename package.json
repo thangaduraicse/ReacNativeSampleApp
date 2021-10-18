@@ -2,6 +2,7 @@
   "main": "index.js",
   "scripts": {
     "android": "react-native run-android",
+    "android:copy:assets": "mkdir -p ./android/app/src/main/assets && cp freshbots-delayed.html ./android/app/src/main/assets/freshbots-delayed.html",
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "start": "react-native start"
